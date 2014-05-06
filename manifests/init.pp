@@ -1,18 +1,21 @@
 #
-class brlcompute {
-    class {"openstack":}
+class ccgcompute {
+    class {'openstack':}
 
-    case $hostname {
-        /^compute([\d+])$/: {
-            $hostnum = $1
-        }
+    case $::hostname {
+      /^compute([\d+])$/: {
+        $hostnum = $1
+      }
+      default {
+        fail("${::hostname} does not match expected hostname pattern")
+      }
     }
     $ifaces_src="auto lo \niface lo inet loopback\nauto eth1\niface eth1 inet manual\n  up ifconfig \$IFACE 0.0.0.0 up\n  up ifconfig \$IFACE promisc\nauto eth2\niface eth2 inet dhcp\n"
-    file {"/etc/network/interfaces":
+    file {'/etc/network/interfaces':
         content => $ifaces_src,
     }
 
-    package { "network-manager":
+    package { 'network-manager':
       ensure => absent
     }
 
@@ -37,22 +40,22 @@ class brlcompute {
       mode    => '0755',
       content => template('brlcompute/brlcompute-network.sh.erb'),
     }
-    exec {"system initial setup":
-        command => '/usr/local/bin/brlcompute-setup.sh',
+    exec {'system initial setup':
+        command  => '/usr/local/bin/brlcompute-setup.sh',
         provider => shell,
-        require => File['/usr/local/bin/brlcompute-setup.sh']
+        require  => File['/usr/local/bin/brlcompute-setup.sh']
     }
-    exec {"system initial network setup":
-        command => '/usr/local/bin/brlcompute-nework.sh',
+    exec {'system initial network setup':
+        command  => '/usr/local/bin/brlcompute-nework.sh',
         provider => shell,
-        require => [ File['/usr/local/bin/brlcompute-setup.sh'] ]
+        require  => [ File['/usr/local/bin/brlcompute-setup.sh'] ]
     }
     package { 'neutron-plugin-openvswitch-agent':
-      ensure => absent,
+      ensure  => absent,
       require => [ Class['openstack'] ]
     }
     package { 'neutron-common':
-      ensure => absent,
+      ensure  => absent,
       require => [ Class['openstack'] ]
     }
     package { 'nova-compute':
@@ -100,7 +103,7 @@ class brlcompute {
       require   => Package['nova-api-metadata'],
     }
 
-    exec { "/usr/sbin/dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-`/bin/uname -r` || exit 0": }
+    exec { '/usr/sbin/dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-`/bin/uname -r` || exit 0': }
 
     file { '/etc/nova/api-paste.ini':
       ensure  => present,
@@ -122,5 +125,3 @@ class brlcompute {
       notify  => Service['nova-compute'],
     }
 }
-
-
