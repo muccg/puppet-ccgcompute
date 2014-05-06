@@ -39,10 +39,11 @@ class ccgcompute () inherits ccgcompute::params {
     require  => File['/usr/local/bin/ccgcompute-setup.sh']
   }
 
+  # TODO This script references neutron, is it still current?
   exec {'system initial network setup':
-    command  => '/usr/local/bin/ccgcompute-nework.sh',
+    command  => '/usr/local/bin/ccgcompute-network.sh',
     provider => shell,
-    require  => File['/usr/local/bin/ccgcompute-setup.sh']
+    require  => File['/usr/local/bin/ccgcompute-network.sh']
   }
 
   exec { '/usr/sbin/dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-`/bin/uname -r` || exit 0': }
