@@ -15,15 +15,15 @@ enabled_apis=ec2,osapi_compute,metadata
 vnc_enabled=True
 vncserver_listen=0.0.0.0
 public_interface=eth0
-my_ip=<%= ipaddress_eth2 %>
-vncserver_proxyclient_address=<%= ipaddress_eth2 %>
-novncproxy_base_url=http://<%= controller_host %>:6080/vnc_auto.html
-glance_host= <%= controller_host %>
+my_ip=<%= @ipaddress_eth2 %>
+vncserver_proxyclient_address=<%= @ipaddress_eth2 %>
+novncproxy_base_url=http://<%= @controller_host %>:6080/vnc_auto.html
+glance_host= <%= @controller_host %>
 rpc_backend = nova.rpc.impl_kombu
-rabbit_host = <%= controller_host %>
+rabbit_host = <%= @controller_host %>
 rabbit_port = 5672
 rabbit_password = guest
-sql_connection=<%= nova_sql %>
+sql_connection=<%= @nova_sql %>
 # network guff
 flat_interface=eth1
 flat_injected=False
