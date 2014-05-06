@@ -25,7 +25,7 @@ class ccgcompute () inherits ccgcompute::params {
     content => template('ccgcompute/ccgcompute-setup.sh.erb'),
   }
 
-  file { '/usr/local/bin/ccgcompute-nework.sh':
+  file { '/usr/local/bin/ccgcompute-network.sh':
       ensure  => present,
       owner   => root,
       group   => root,
