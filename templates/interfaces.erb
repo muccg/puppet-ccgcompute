@@ -1,0 +1,8 @@
+auto lo
+iface lo inet loopback
+auto eth1
+iface eth1 inet manual
+  up ifconfig $IFACE 0.0.0.0 up
+  up ifconfig $IFACE promisc
+auto eth2
+iface eth2 inet dhcp

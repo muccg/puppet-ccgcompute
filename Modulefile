@@ -1,5 +1,5 @@
 name         'muccg-ccgcompute'
-version      '1.0.1'
+version      '1.2.0'
 
 author       'Centre for Comparative Genomics'
 license      'GNU GPL Version 3'
