@@ -25,30 +25,30 @@ class ccgcompute {
     package { 'mysql-client':
       ensure  => present,
     }
-    file { '/usr/local/bin/brlcompute-setup.sh':
+    file { '/usr/local/bin/ccgcompute-setup.sh':
       ensure  => present,
       owner   => root,
       group   => root,
       mode    => '0755',
-      content => template('brlcompute/brlcompute-setup.sh.erb'),
+      content => template('ccgcompute/ccgcompute-setup.sh.erb'),
       require => [ Package['xfsprogs'] ],
     }
-    file { '/usr/local/bin/brlcompute-nework.sh':
+    file { '/usr/local/bin/ccgcompute-nework.sh':
       ensure  => present,
       owner   => root,
       group   => root,
       mode    => '0755',
-      content => template('brlcompute/brlcompute-network.sh.erb'),
+      content => template('ccgcompute/ccgcompute-network.sh.erb'),
     }
     exec {'system initial setup':
-        command  => '/usr/local/bin/brlcompute-setup.sh',
+        command  => '/usr/local/bin/ccgcompute-setup.sh',
         provider => shell,
-        require  => File['/usr/local/bin/brlcompute-setup.sh']
+        require  => File['/usr/local/bin/ccgcompute-setup.sh']
     }
     exec {'system initial network setup':
-        command  => '/usr/local/bin/brlcompute-nework.sh',
+        command  => '/usr/local/bin/ccgcompute-nework.sh',
         provider => shell,
-        require  => [ File['/usr/local/bin/brlcompute-setup.sh'] ]
+        require  => [ File['/usr/local/bin/ccgcompute-setup.sh'] ]
     }
     package { 'neutron-plugin-openvswitch-agent':
       ensure  => absent,
@@ -110,7 +110,7 @@ class ccgcompute {
       owner   => root,
       group   => root,
       mode    => '0644',
-      content => template('brlcompute/api-paste.ini.erb'),
+      content => template('ccgcompute/api-paste.ini.erb'),
       require => Package['nova-compute'],
       notify  => Service['nova-compute'],
     }
@@ -121,7 +121,7 @@ class ccgcompute {
       group   => root,
       mode    => '0644',
       require => Package['nova-compute'],
-      content => template('brlcompute/nova.conf.erb'),
+      content => template('ccgcompute/nova.conf.erb'),
       notify  => Service['nova-compute'],
     }
 }

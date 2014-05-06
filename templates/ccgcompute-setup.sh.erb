@@ -1,0 +1,38 @@
+#!/bin/bash
+
+donefile="/usr/local/var/ccgcompute-setup-done"
+
+set -e
+
+mkdir -p /usr/local/var/
+if [ -e "$donefile" ]; then 
+    exit 0
+fi
+
+mkfs.xfs -f /dev/sdb
+echo '/dev/sdb /data xfs' >> /etc/fstab
+mkdir -p /data
+mount /data
+
+# copy libvirt over
+cd /etc/init.d; for i in nova-*; do (service "$i" stop || exit 0); done
+mkdir -p /data/nova/
+rsync -az /var/lib/nova/ /data/nova/
+mv /var/lib/nova/ /var/lib/nova-old/
+mkdir -p /var/lib/nova/
+echo '/data/nova/ /var/lib/nova/ none bind' >> /etc/fstab
+mount /var/lib/nova/
+cd /etc/init.d; for i in nova-*; do (service "$i" start || exit 0); done
+rm -rf /var/lib/nova-old/
+
+# make the ceph filesystems and mounts
+for dev in sd{c..l}; do
+    mkfs.xfs -f /dev/"$dev"
+    mnt=/srv/node/"$dev"
+    mkdir -p "$mnt"
+    echo "/dev/$dev $mnt xfs" >> /etc/fstab
+    mount "$mnt"
+done
+
+touch "$donefile"
+
