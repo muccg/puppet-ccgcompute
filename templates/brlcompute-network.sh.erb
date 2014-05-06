@@ -1,0 +1,20 @@
+#!/bin/bash
+
+donefile="/usr/local/var/brlcompute-network-setup-done"
+
+set -e
+
+if [ -e "$donefile" ]; then
+  exit 0
+fi
+
+service neutron-plugin-openvswitch-agent restart
+
+ovs-vsctl add-br br-int
+ovs-vsctl add-br br-ext
+ovs-vsctl add-port br-ext eth0
+
+service neutron-plugin-openvswitch-agent restart
+
+touch "$donefile"
+
