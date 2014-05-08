@@ -25,25 +25,10 @@ class ccgcompute () inherits ccgcompute::params {
     content => template('ccgcompute/ccgcompute-setup.sh.erb'),
   }
 
-  file { '/usr/local/bin/ccgcompute-network.sh':
-      ensure  => present,
-      owner   => root,
-      group   => root,
-      mode    => '0755',
-      content => template('ccgcompute/ccgcompute-network.sh.erb'),
-  }
-
   exec {'system initial setup':
     command  => '/usr/local/bin/ccgcompute-setup.sh',
     provider => shell,
     require  => File['/usr/local/bin/ccgcompute-setup.sh']
-  }
-
-  # TODO This script references neutron, is it still current?
-  exec {'system initial network setup':
-    command  => '/usr/local/bin/ccgcompute-network.sh',
-    provider => shell,
-    require  => File['/usr/local/bin/ccgcompute-network.sh']
   }
 
   exec { '/usr/sbin/dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-`/bin/uname -r` || exit 0': }
