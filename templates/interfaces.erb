@@ -1,8 +1,22 @@
 auto lo
 iface lo inet loopback
-auto eth1
-iface eth1 inet manual
+
+# PUBLIC network
+auto eth0.3
+iface eth0.3 inet manual
   up ifconfig $IFACE 0.0.0.0 up
   up ifconfig $IFACE promisc
+
+# DMZ network
+auto eth0.4
+iface eth0.4 inet manual
+  up ifconfig $IFACE 0.0.0.0 up
+  up ifconfig $IFACE promisc
+
+# REPLICATION network
+auto eth1
+iface eth1 inet dhcp
+
+# MANAGEMENT network
 auto eth2
 iface eth2 inet dhcp
