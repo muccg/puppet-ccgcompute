@@ -3,8 +3,7 @@ iface lo inet loopback
 
 # PUBLIC network
 auto eth0.3
-iface eth0.3 inet manual
-  up ifconfig $IFACE 0.0.0.0 up
+iface eth0.3 inet dhcp
   up ifconfig $IFACE promisc
 
 # DMZ network
