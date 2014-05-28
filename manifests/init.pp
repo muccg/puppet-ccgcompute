@@ -7,6 +7,15 @@ class ccgcompute () inherits ccgcompute::params {
     content => template('ccgcompute/interfaces.erb'),
   }
 
+  file {'/etc/default/grub':
+    content => template('ccgcompute/grub.erb'),
+  }
+
+  exec { "/usr/sbin/update-grub":
+    subscribe   => File["/etc/default/grub"],
+    refreshonly => true
+  }
+
   package { $ccgcompute::absent_packages:
     ensure  => absent,
     require => Class['openstack']
@@ -54,14 +63,6 @@ class ccgcompute () inherits ccgcompute::params {
   }
 
   service { 'nova-compute':
-    ensure    => running,
-    enable    => true,
-    provider  => upstart,
-    require   => Package[$ccgcompute::packages],
-    subscribe => File['/etc/nova/nova.conf'],
-  }
-
-  service { 'nova-network':
     ensure    => running,
     enable    => true,
     provider  => upstart,
