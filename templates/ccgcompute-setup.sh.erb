@@ -25,14 +25,5 @@ mount /var/lib/nova/
 cd /etc/init.d; for i in nova-*; do (service "$i" start || exit 0); done
 rm -rf /var/lib/nova-old/
 
-# make the ceph filesystems and mounts
-for dev in sd{c..l}; do
-    mkfs.xfs -f /dev/"$dev"
-    mnt=/srv/node/"$dev"
-    mkdir -p "$mnt"
-    echo "/dev/$dev $mnt xfs" >> /etc/fstab
-    mount "$mnt"
-done
-
 touch "$donefile"
 
