@@ -40,7 +40,7 @@ class ccgcompute () inherits ccgcompute::params {
     require  => File['/usr/local/bin/ccgcompute-setup.sh']
   }
 
-  exec { '/usr/sbin/dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-`/bin/uname -r` || exit 0': }
+  exec { '/usr/bin/dpkg-statoverride --update --add root root 0644 /boot/vmlinuz-`/bin/uname -r` || exit 0': }
 
   file { '/etc/nova/api-paste.ini':
     ensure  => present,
