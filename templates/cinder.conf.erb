@@ -24,3 +24,14 @@ glance_api_version=2
 # so libvirt can access ceph
 rbd_user=cinder
 rbd_secret_uuid=e8aed096-a735-4129-9c76-78d4877de818
+glance_host = <%= @controller_host %>
+[database]
+connection = <%= @cinder_database %>
+[keystone_authtoken]
+auth_uri = http://<%= @controller_host %>:5000
+auth_host = <%= @controller_host %>
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = service
+admin_user = cinder
+admin_password = <%= @cinder_admin_password %>

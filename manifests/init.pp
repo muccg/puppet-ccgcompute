@@ -52,6 +52,16 @@ class ccgcompute () inherits ccgcompute::params {
     notify  => Service['nova-compute'],
   }
 
+  file { '/etc/cinder/api-paste.ini':
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => template('ccgcompute/cinder-api-paste.ini.erb'),
+    require => Package[$ccgcompute::packages],
+    notify  => Service['cinder-volume'],
+  }
+
   file { '/etc/nova/nova.conf':
     ensure  => present,
     owner   => root,
