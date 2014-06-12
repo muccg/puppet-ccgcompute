@@ -62,6 +62,24 @@ class ccgcompute () inherits ccgcompute::params {
     notify  => Service['nova-compute'],
   }
 
+  file { '/etc/cinder/cinder.conf':
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => template('ccgcompute/cinder.conf.erb'),
+    require => Package[$ccgcompute::packages],
+    notify  => Service['cinder-volume'],
+  }
+
+  service { 'cinder-volume':
+    ensure    => running,
+    enable    => true,
+    provider  => upstart,
+    require   => Package[$ccgcompute::packages],
+    subscribe => File['/etc/cinder/cinder.conf'],
+  }
+
   service { 'nova-compute':
     ensure    => running,
     enable    => true,

@@ -1,0 +1,26 @@
+[DEFAULT]
+rootwrap_config = /etc/cinder/rootwrap.conf
+api_paste_confg = /etc/cinder/api-paste.ini
+iscsi_helper = tgtadm
+volume_name_template = volume-%s
+volume_group = cinder-volumes
+verbose = True
+auth_strategy = keystone
+state_path = /var/lib/cinder
+lock_path = /var/lock/cinder
+volumes_dir = /var/lib/cinder/volumes
+rpc_backend = cinder.openstack.common.rpc.impl_kombu
+rabbit_host = <%= @controller_host %>
+rabbit_port = 5672
+rabbit_userid = guest
+rabbit_password = guest
+# ceph for volumes
+volume_driver=cinder.volume.drivers.rbd.RBDDriver
+rbd_pool=volumes
+rbd_ceph_conf=/etc/ceph/ceph.conf
+rbd_flatten_volume_from_snapshot=false
+rbd_max_clone_depth=5
+glance_api_version=2
+# so libvirt can access ceph
+rbd_user=cinder
+rbd_secret_uuid=e8aed096-a735-4129-9c76-78d4877de818

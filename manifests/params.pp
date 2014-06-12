@@ -25,6 +25,7 @@ class ccgcompute::params {
       'openvswitch-common',
       'nova-api-metadata',
       'python-novaclient',
+      'cinder-volume',
       'gdisk'
     ]
 }
