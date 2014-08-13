@@ -28,8 +28,8 @@ sql_connection=<%= @nova_sql %>
 flat_interface=em1.3
 public_interface=em1.3
 #flat_injected=False
-#dhcpbridge_flagfile=/etc/nova/nova.conf
-#dhcpbridge=/usr/bin/nova-dhcpbridge
+dhcpbridge_flagfile=/etc/nova/nova.conf
+dhcpbridge=/usr/bin/nova-dhcpbridge
 network_manager=nova.network.manager.FlatDHCPManager
 #fixed_range=''
 flat_network_bridge=br100
