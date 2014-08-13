@@ -105,4 +105,12 @@ class ccgcompute () inherits ccgcompute::params {
     require   => Package[$ccgcompute::packages],
     subscribe => File['/etc/nova/nova.conf'],
   }
+
+  service { 'nova-network':
+    ensure    => running,
+    enable    => true,
+    provider  => upstart,
+    require   => Package[$ccgcompute::packages],
+    subscribe => File['/etc/nova/nova.conf'],
+  }
 }

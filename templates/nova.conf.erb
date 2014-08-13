@@ -23,18 +23,25 @@ rabbit_host = <%= @controller_host %>
 rabbit_port = 5672
 rabbit_password = guest
 sql_connection=<%= @nova_sql %>
+
 # network guff
 flat_interface=em1.3
-flat_injected=False
-dhcpbridge_flagfile=/etc/nova/nova.conf
-dhcpbridge=/usr/bin/nova-dhcpbridge
+public_interface=em1.3
+#flat_injected=False
+#dhcpbridge_flagfile=/etc/nova/nova.conf
+#dhcpbridge=/usr/bin/nova-dhcpbridge
 network_manager=nova.network.manager.FlatDHCPManager
-fixed_range=''
+#fixed_range=''
 flat_network_bridge=br100
 firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
 network_size=254
-allow_same_net_traffic=True
-multi_host=False
+#allow_same_net_traffic=True
+allow_same_net_traffic=False
+#multi_host=False
+multi_host=True
 send_arp_for_ha=True
 share_dhcp_address=True
 force_dhcp_release=True
+
+network_api_class = nova.network.api.API
+security_group_api = nova

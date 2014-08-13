@@ -14,12 +14,12 @@ class ccgcompute::params {
       'network-manager',
       'neutron-plugin-openvswitch-agent',
       'neutron-common',
-      'nova-network',
     ]
 
     $packages = [
       'xfsprogs',
       'mysql-client',
+      'nova-network',
       'nova-compute',
       'nova-compute-kvm',
       'openvswitch-common',
