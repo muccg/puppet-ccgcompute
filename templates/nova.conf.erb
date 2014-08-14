@@ -26,15 +26,15 @@ sql_connection=<%= @nova_sql %>
 # Networking
 network_manager=nova.network.manager.FlatDHCPManager
 #dhcp_domain=
-#dhcpbridge=/usr/bin/nova-dhcpbridge
+dhcpbridge=/usr/bin/nova-dhcpbridge
 dhcpbridge_flagfile=/etc/nova/nova.conf
 dnsmasq_config_file=/etc/nova/dnsmasq.conf
 #routing_source_ip=
 multi_host=True
-allow_same_net_traffic=False
+allow_same_net_traffic=True
 
-flat_interface=em1.3
-public_interface=em1.3
+flat_interface=em1.4
+public_interface=em1.4
 #fixed_range=''
 flat_network_bridge=br100
 firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
