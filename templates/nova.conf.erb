@@ -2,7 +2,6 @@
 logdir=/var/log/nova
 state_path=/var/lib/nova
 lock_path=/var/lock/nova
-force_dhcp_release=True
 iscsi_helper=tgtadm
 libvirt_use_virtio_for_bridges=True
 connection_type=libvirt
@@ -24,20 +23,22 @@ rabbit_port = 5672
 rabbit_password = guest
 sql_connection=<%= @nova_sql %>
 
-# network guff
+# Networking
+network_manager=nova.network.manager.FlatDHCPManager
+#dhcp_domain=
+#dhcpbridge=/usr/bin/nova-dhcpbridge
+dhcpbridge_flagfile=/etc/nova/nova.conf
+dnsmasq_config_file=/etc/nova/dnsmasq.conf
+#routing_source_ip=
+multi_host=True
+allow_same_net_traffic=False
+
 flat_interface=em1.3
 public_interface=em1.3
-#flat_injected=False
-dhcpbridge_flagfile=/etc/nova/nova.conf
-dhcpbridge=/usr/bin/nova-dhcpbridge
-network_manager=nova.network.manager.FlatDHCPManager
 #fixed_range=''
 flat_network_bridge=br100
 firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
 network_size=254
-#allow_same_net_traffic=True
-allow_same_net_traffic=False
-#multi_host=False
 multi_host=True
 send_arp_for_ha=True
 share_dhcp_address=True

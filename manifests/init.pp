@@ -113,4 +113,13 @@ class ccgcompute () inherits ccgcompute::params {
     require   => Package[$ccgcompute::packages],
     subscribe => File['/etc/nova/nova.conf'],
   }
+
+  file { '/etc/nova/dnsmasq.conf':
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => template('ccgcompute/dnsmasq.conf.erb'),
+    require => Package[$ccgcompute::packages],
+  }
 }
