@@ -1,6 +1,14 @@
 auto lo
 iface lo inet loopback
 
+# DMZ network
+auto em1.10
+iface em1.10 inet static
+  address 192.168.1.20<%= hostnum %>
+  netmask 255.255.255.0
+  gateway 192.168.1.1
+  up ifconfig $IFACE promisc
+
 # PUBLIC network
 auto em1.41
 iface em1.41 inet dhcp

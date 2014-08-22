@@ -82,6 +82,14 @@ class ccgcompute () inherits ccgcompute::params {
     notify  => Service['cinder-volume'],
   }
 
+  file { '/etc/dhcp/dhclient.conf':
+    content => template('ccgcompute/dhclient.conf.erb'),
+    ensure  => present,
+    owner   => root,
+    group   => root,
+    mode    => '0644'
+  }
+
   service { 'cinder-volume':
     ensure    => running,
     enable    => true,

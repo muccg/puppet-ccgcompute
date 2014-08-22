@@ -26,6 +26,7 @@ class ccgcompute::params {
       'nova-api-metadata',
       'python-novaclient',
       'cinder-volume',
-      'gdisk'
+      'gdisk',
+      'sysfsutils'
     ]
 }
