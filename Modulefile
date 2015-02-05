@@ -1,6 +1,5 @@
 name         'muccg-ccgcompute'
 version      '1.2.0'
-
 author       'Centre for Comparative Genomics'
 license      'GNU GPL Version 3'
 project_page 'https://github.com/muccg/puppet-ccgcompute'
