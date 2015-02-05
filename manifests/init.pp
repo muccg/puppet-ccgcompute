@@ -1,7 +1,9 @@
 #
 class ccgcompute () inherits ccgcompute::params {
 
-  class {'openstack':}
+  class {'openstack':
+    require  => Exec['apt-get update']
+  }
 
   file {'/etc/network/interfaces':
     content => template('ccgcompute/interfaces.erb'),
