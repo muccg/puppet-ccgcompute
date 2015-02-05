@@ -5,6 +5,10 @@ class ccgcompute::params {
       /^compute([\d+])$/: {
         $hostnum = $1
       }
+      # docker test node
+      /^computenode/: {
+        $hostnum = $1
+      }
       default: {
         fail("${::hostname} does not match expected hostname pattern")
       }
