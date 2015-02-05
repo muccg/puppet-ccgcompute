@@ -2,7 +2,6 @@
 class ccgcompute () inherits ccgcompute::params {
 
   class {'openstack':
-    require  => Exec['apt-get update']
   }
 
   file {'/etc/network/interfaces':
